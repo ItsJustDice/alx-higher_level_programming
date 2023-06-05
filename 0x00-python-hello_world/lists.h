@@ -1,10 +1,10 @@
-#ifndef LISTS.H
-#define LISTS.H
+#ifndef LISTS_H
+#define LISTS_H
 
 #include <stdlib.h>
 
 /**
- * struct listint_s - Entry point
+ * struct listint_s - singly linked list
  * @next: pointer to following node
  * @n: integer
  * Description: node structure for single linked list for the Holberton project
@@ -23,4 +23,4 @@ int check_cycle(listint_t *list);
 /* yields 0 or 1 depending on if it finds a cycle in a linked list */
 void free_listint(listint_t *head);
 
-#endif /* LISTS.H */
+#endif /* LISTS_H */
