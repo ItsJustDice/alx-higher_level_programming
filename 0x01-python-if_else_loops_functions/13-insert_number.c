@@ -29,9 +29,9 @@ listint_t *insert_node(listint_t **head, int number)
 	while (skip && skip->next && skip->next->n < number)
 		skip = skip->next;
 
-	new->next = skip->next;
+	hop->next = skip->next;
 	/* Set the next pointer of the skip node to the hop node */
-	skip->next - hop;
+	skip->next = hop;
 
 	return (hop);
 }
