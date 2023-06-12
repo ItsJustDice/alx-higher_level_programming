@@ -8,15 +8,15 @@
 void reverse_listint(listint_t **head)
 {
 	listint_t *prev = NULL; /* To save prior nod, create a temp pointer */
-	listint_t *crack = *head; /* Make a pointer to the currently selected node */
+	listint_t *current = *head; /* Make a pointer to currently selected node */
 	listint_t *next = NULL; /* Set-up temp pointer to hold following node */
 
-	while (crack)
+	while (current)
 	{
-		next = crack->next; /* In the temp pointer, save following node */
-		crack->next = prev; /* Set current nodes 'next' pointer to preceding node */
-		prev = crack; /* Update previous node pointer to current node */
-		crack = next; /* Update current node before moving on to following node */
+		next = current->next; /* In the temp pointer, save following node */
+		current->next = prev; /* Set current nodes next pointer to preceding node */
+		prev = current; /* Update previous node pointer to current node */
+		current = next; /* Update current node before moving to following node */
 	}
 
 	*head = prev; /* Make last encountered node, new head of inverted list */
@@ -30,35 +30,35 @@ void reverse_listint(listint_t **head)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *bloom = *head, *rise = *head, *ling = *head, *dup = NULL;
+	listint_t *slow = *head, *fast = *head, *temp = *head, *dup = NULL;
 
 	if (*head == NULL || (*head)->next == NULL)
 		return (1); /* Return 1 if linked list empty or has only 1 element */
 
 	while (1) /* infinite loop */
 	{
-		rise = rise->next->next; /* two nodes are added to the 'rise' pointer */
-		if (!rise) /* if 'raise' is the last item on the list */
+		fast = fast->next->next; /* two nodes are added to the 'fast' pointer */
+		if (!fast) /* if 'fast' is the last item on the list */
 		{
-			dup = bloom->next; /* sets "dup" to node following "bloom" */
+			dup = slow->next; /* sets "dup" to node following "fast" */
 			break;
 		}
-		if (!rise->next) /* When 'rise' reaches the next-to-last node */
+		if (!fast->next) /* When 'fast' reaches the next-to-last node */
 		{
-			dup = bloom->next->next; /* sets "dup" to 2nd node after "bloom" */
+			dup = slow->next->next; /* sets "dup" to 2nd node after "slow" */
 			break;
 		}
-		bloom = bloom->next; /* shifts the 'bloom' pointer forward by one node */
+		slow = slow->next; /* shifts the 'slow' pointer forward by one node */
 	}
 
 	reverse_listint(&dup);
 
-	while (dup && ling)
+	while (dup && temp)
 	{
-		if (ling->n == dup->n) /* data values at 'ling' and 'dup' are equal */
+		if (temp->n == dup->n) /* data values at 'temp' and 'dup' are equal */
 		{
 			dup = dup->next; /* Moves 'dup' to following node */
-			ling = ling->next; /* Moves 'ling' to the next node */
+			temp = temp->next; /* Moves 'temp' to the next node */
 		}
 		else
 			return (0);
