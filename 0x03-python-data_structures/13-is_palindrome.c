@@ -1,10 +1,13 @@
-#include "lists.h"
 #include <stddef.h>
+#include "lists.h"
+
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
  * @head: double pointer to the head of the list
  * Return: 0 if not a palindrome, 1 if a palindrome
+ * Author: Candice De Briun
  */
+
 int is_palindrome(listint_t **head)
 {
 	listint_t *fast = *head;
@@ -12,34 +15,34 @@ int is_palindrome(listint_t **head)
 	listint_t *prev = NULL;
 	listint_t *temp;
 
-	/* Look for a list without any items or one node in the list */
+	/* Check for an empty list or a list with a single node */
 	if (*head == NULL || (*head)->next == NULL)
 	{
 		return (1);
 	}
-	/* Divide the list in half, then flip the first half */
+	/* Split the list into two halves and reverse the first half */
 	while (fast != NULL && fast->next != NULL)
 	{
-		fast = fast->next->next;  /* rapid two-step pointer movement */
+		fast = fast->next->next;  /* Move fast pointer two steps */
 		temp = slow->next;
-		slow->next = prev; /* Switch the sluggish pointer's link around */
+		slow->next = prev; /* Reverse the link of the slow pointer */
 		prev = slow;
 		slow = temp;
 	}
-	/* there are more even nodes in list, adjust the slow pointer */
+	/* Adjust the slow pointer if the list has an odd number of nodes */
 	if (fast != NULL)
 		slow = slow->next;
-	/* Contrast the changed first half with the second half */
+	/* Compare the reversed first half with the second half */
 	while (slow != NULL)
 	{
 		if (prev->n != slow->n)
 		{
-			/* Return 0 if Nodes don't match */
+			/* Nodes don't match, not a palindrome */
 			return (0);
 		}
 		prev = prev->next;
 		slow = slow->next;
 	}
-	/* Return 1 if all nodes match, it's a palindrome */
+	/* All nodes match, it is a palindrome */
 	return (1);
 }
