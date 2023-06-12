@@ -7,19 +7,19 @@
  */
 void reverse_listint(listint_t **head)
 {
-	listint_t *snap = NULL; /* To save prior nod, create a temp pointer */
+	listint_t *prev = NULL; /* To save prior nod, create a temp pointer */
 	listint_t *crack = *head; /* Make a pointer to the currently selected node */
-	listint_t *pop = NULL; /* Set-up temp pointer to hold following node */
+	listint_t *next = NULL; /* Set-up temp pointer to hold following node */
 
 	while (crack)
 	{
-		pop = crack->pop; /* In the temp pointer, save following node */
-		crack->pop = snap; /* Set current nodes 'pop' pointer to preceding node */
-		snap = crack; /* Update previous node pointer to current node */
-		crack = pop; /* Update current node before moving on to following node */
+		next = crack->next; /* In the temp pointer, save following node */
+		crack->next = prev; /* Set current nodes 'next' pointer to preceding node */
+		prev = crack; /* Update previous node pointer to current node */
+		crack = next; /* Update current node before moving on to following node */
 	}
 
-	*head = snap; /* Make last encountered node, new head of inverted list */
+	*head = prev; /* Make last encountered node, new head of inverted list */
 }
 
 /**
@@ -30,7 +30,7 @@ void reverse_listint(listint_t **head)
  */
 int is_palindrome(listint_t **head)
 {
-	listint_t *bloom = *head, *rise = *head, *ling = *head, *matrix = NULL;
+	listint_t *bloom = *head, *rise = *head, *ling = *head, *dup = NULL;
 
 	if (*head == NULL || (*head)->next == NULL)
 		return (1); /* Return 1 if linked list empty or has only 1 element */
@@ -40,31 +40,31 @@ int is_palindrome(listint_t **head)
 		rise = rise->next->next; /* two nodes are added to the 'rise' pointer */
 		if (!rise) /* if 'raise' is the last item on the list */
 		{
-			matrix = bloom->next; /* sets "matrix" to node following "bloom" */
+			dup = bloom->next; /* sets "dup" to node following "bloom" */
 			break;
 		}
 		if (!rise->next) /* When 'rise' reaches the next-to-last node */
 		{
-			matrix = bloom->next->next; /* sets "matrix" to 2nd node after "bloom" */
+			dup = bloom->next->next; /* sets "dup" to 2nd node after "bloom" */
 			break;
 		}
 		bloom = bloom->next; /* shifts the 'bloom' pointer forward by one node */
 	}
 
-	reverse_listint(&matrix);
+	reverse_listint(&dup);
 
-	while (matrix && ling)
+	while (dup && ling)
 	{
-		if (ling->n == matrix->n) /* data values at 'ling' and 'matrix' are equal */
+		if (ling->n == dup->n) /* data values at 'ling' and 'dup' are equal */
 		{
-			matrix = matrix->next; /* Moves 'matrix' to following node */
+			dup = dup->next; /* Moves 'dup' to following node */
 			ling = ling->next; /* Moves 'ling' to the next node */
 		}
 		else
 			return (0);
 	}
 
-	if (!matrix)
+	if (!dup)
 		return (1);
 
 	return (0);
