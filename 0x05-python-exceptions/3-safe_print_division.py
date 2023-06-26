@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 def safe_print_division(a, b):
     try:
-        count = a / b
-        print("Inside count: {:.1f}".format(count))
-    except:
-        count = None
-        print("Inside count: {}".format(count))
+        div = a / b
+    except ZeroDivisionError:
+        div = None
     finally:
-        return count
+        print("Inside result: {}".format(div))
+    return div
